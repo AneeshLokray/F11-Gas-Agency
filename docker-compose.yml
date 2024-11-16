@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  api-server:
+    build: ./backend
+    container_name: backend-server
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes: 
+      - ./server:/usr/src/index
+    environment:
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_URL=${MONGODB_URL}
+    networks:
+      - mern-network
+
+  frontend:
+    build: ./frontend
+    container_name: frontend-server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/usr/src/index
+    networks:
+      - mern-network
+
+networks:
+  mern-network:
+    driver: bridge
